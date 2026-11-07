@@ -1,0 +1,41 @@
+DORMITORY MANAGEMENT SYSTEM - COMPLETION NOTES
+
+Existing core modules found in this project:
+- Users and user permissions
+- Dormitory locations / rooms (location support is referenced by dashboard)
+- Tenants
+- Applicant profiles and applicant bookings
+- Reservations
+- Billing and payments
+- Maintenance
+- Reports and dashboard
+- Archive / restore (rooms and users only in current implementation)
+
+Additional database modules introduced by database/complete_system_upgrade.sql:
+- payment_methods
+- system_settings
+- staff_profiles (staff profile attached to users; authentication remains in users)
+- contracts
+- invoices (one invoice record per billing record)
+- expenses
+- announcements
+- complaints
+- visitors
+- room_inspections
+- notifications
+- documents
+
+IMPORTANT:
+1. Back up dormitory_db before running any migration.
+2. Run the existing migrations in order as described in README.txt, then archive_upgrade.sql,
+   then complete_system_upgrade.sql.
+3. This migration creates database structures only for the additional modules. It does not
+   automatically create finished PHP screens, menu links, CRUD workflows, role permissions,
+   file upload handling, or reports for each new module. Those application features must be
+   implemented and tested separately against the actual database.
+4. Existing table structures are not dropped or replaced.
+5. The documents table stores file metadata only. Uploaded files must be stored in a protected
+   directory with validated file type/size and randomized server-side filenames.
+6. Do not expose uploaded documents directly from a public folder.
+7. Archive/restore is currently wired only for Rooms and Users; additional modules need their
+   own safe archive policies, especially where foreign keys and financial audit trails apply.
